@@ -1,0 +1,156 @@
+{
+  "name": "universal-agent-quota",
+  "displayName": "Universal Agent Quota",
+  "description": "Monitor quota for AI CLI tools: Opencode Antigravity Auth, Claude Code, Codex, Gemini CLI, and Z.AI",
+  "version": "0.1.1",
+  "publisher": "tctinh",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tctinh/universal-agent-quota-tracker"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "quota",
+    "ai",
+    "claude",
+    "openai",
+    "gemini",
+    "antigravity",
+    "codex",
+    "rate-limit"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "universalQuota",
+          "title": "Universal Agent Quota",
+          "icon": "media/quota-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "universalQuota": [
+        {
+          "id": "universalQuotaView",
+          "name": "Quota Status",
+          "icon": "media/quota-icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "universalQuota.refresh",
+        "title": "Refresh Quota",
+        "category": "Universal Quota",
+        "icon": {
+          "light": "media/light/refresh.svg",
+          "dark": "media/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "universalQuota.showDetails",
+        "title": "Show Quota Details",
+        "category": "Universal Quota"
+      },
+      {
+        "command": "universalQuota.configure",
+        "title": "Configure Settings",
+        "category": "Universal Quota"
+      },
+      {
+        "command": "universalQuota.setZaiApiKey",
+        "title": "Set Z.AI API Key",
+        "category": "Universal Quota"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "universalQuota.refresh",
+          "when": "view == universalQuotaView",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "universalQuota.refresh",
+          "when": "true"
+        },
+        {
+          "command": "universalQuota.showDetails",
+          "when": "true"
+        },
+        {
+          "command": "universalQuota.configure",
+          "when": "true"
+        },
+        {
+          "command": "universalQuota.setZaiApiKey",
+          "when": "true"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Universal Agent Quota",
+      "properties": {
+        "universalQuota.refreshInterval": {
+          "type": "number",
+          "default": 300000,
+          "minimum": 60000,
+          "description": "Auto-refresh interval in milliseconds (default: 5 minutes)"
+        },
+        "universalQuota.providers.antigravity.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Opencode Antigravity Auth quota monitoring"
+        },
+        "universalQuota.providers.claudeCode.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Claude Code quota monitoring"
+        },
+        "universalQuota.providers.codex.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Codex CLI quota monitoring"
+        },
+        "universalQuota.providers.geminiCli.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Gemini CLI quota monitoring"
+        },
+        "universalQuota.providers.zai.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Z.AI quota monitoring"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "typescript": "^5.3.0"
+  }
+}
