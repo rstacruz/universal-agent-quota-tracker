@@ -3,6 +3,8 @@ import { ProviderRegistry } from './providers';
 import { QuotaTreeProvider } from './views/quotaTreeProvider';
 import { QuotaStatusBar } from './views/statusBar';
 import { RefreshManager, ApiKeyService } from './services';
+import { VSCodeConfigService } from './services/vscodeConfigService';
+import { promptForApiKey } from './utils/apiKeyUtils';
 import { setZaiApiKey } from './providers/zai';
 
 let refreshManager: RefreshManager | undefined;
@@ -14,7 +16,9 @@ export function activate(context: vscode.ExtensionContext) {
   const registry = new ProviderRegistry();
   const treeProvider = new QuotaTreeProvider(registry);
   const statusBar = new QuotaStatusBar(registry);
-  apiKeyService = new ApiKeyService(context.secrets);
+  
+  const configService = new VSCodeConfigService(context.secrets);
+  apiKeyService = new ApiKeyService(configService);
 
   refreshManager = new RefreshManager(
     registry,
@@ -46,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
     'universalQuota.setZaiApiKey',
     async () => {
       if (!apiKeyService) return;
-      const success = await apiKeyService.promptForApiKey('zai');
+      const success = await promptForApiKey(apiKeyService, 'zai');
       if (success) {
         const key = await apiKeyService.getApiKey('zai');
         setZaiApiKey(key);
@@ -55,7 +59,9 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  loadStoredApiKeys(context.secrets);
+  if (apiKeyService) {
+    loadStoredApiKeys(apiKeyService);
+  }
 
   refreshManager.startAutoRefresh();
   refreshManager.refresh();
@@ -73,8 +79,8 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Universal Agent Quota extension activated');
 }
 
-async function loadStoredApiKeys(secrets: vscode.SecretStorage): Promise<void> {
-  const zaiKey = await secrets.get('universalQuota.zai.apiKey');
+async function loadStoredApiKeys(service: ApiKeyService): Promise<void> {
+  const zaiKey = await service.getApiKey('zai');
   if (zaiKey) {
     setZaiApiKey(zaiKey);
   }
