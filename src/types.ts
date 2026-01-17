@@ -9,6 +9,11 @@ export interface ModelQuota {
   usedPercent: number;       // 0-100
   resetTime?: Date;
   trend?: TrendDirection;
+  
+  // Unit reporting
+  remainingUnits?: number;
+  totalUnits?: number;
+  unitName?: string; // 'USD', 'requests', 'tokens', etc.
 }
 
 export interface AccountQuota {
