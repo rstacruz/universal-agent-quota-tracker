@@ -1,6 +1,8 @@
 # Universal Agent Quota
 
-Monitor quota for AI CLI tools in VS Code with a sidebar panel and status bar.
+Monitor quota for AI CLI tools in CLI.
+
+This is a fork of [tctinh/universal-agent-quota-tracker](https://github.com/tctinh/universal-agent-quota-tracker) that makes it work in CLI instead of VS Code.
 
 ## Supported Providers
 
@@ -52,38 +54,6 @@ The CLI looks for API keys in two places (in order of priority):
      "universalQuota.zai.apiKey": "your-key-here"
    }
    ```
-
-## Features
-
-- **Sidebar Panel**: Hierarchical view of all providers, accounts, and models
-- **Status Bar**: Quick glance at quota across all providers
-- **Auto-Refresh**: Updates every 5 minutes (configurable)
-- **Notifications**: Alerts when quota drops below threshold
-- **Multi-Account**: Full support for Antigravity multi-account setup
-
-## Visual Indicators
-
-| Icon | Meaning |
-|------|---------|
-| 🟢 | Good (>=70% remaining) |
-| 🟡 | Warning (30-69% remaining) |
-| 🔴 | Critical (<30% remaining) |
-| ⚫ | Not configured |
-
-## Commands
-
-- `Universal Quota: Refresh Quota` - Manually refresh quota data
-- `Universal Quota: Show Quota Details` - Open the sidebar panel
-- `Universal Quota: Configure Settings` - Open extension settings
-
-## Configuration
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `universalQuota.refreshInterval` | 300000 | Auto-refresh interval in ms (5 min) |
-| `universalQuota.notifications.enabled` | true | Enable low quota notifications |
-| `universalQuota.notifications.warningThreshold` | 20 | Warning at this % remaining |
-| `universalQuota.notifications.criticalThreshold` | 5 | Critical warning at this % |
 
 ## Requirements
 
