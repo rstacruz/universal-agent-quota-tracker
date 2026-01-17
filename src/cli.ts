@@ -6,6 +6,7 @@ import { CLIConfigService } from './services/cliConfigService';
 import { ApiKeyService } from './services/apiKeyService';
 import { ProviderRegistry } from './providers';
 import { setZaiApiKey } from './providers/zai';
+import { formatTable } from './cli/tableFormatter';
 
 async function main() {
   const argv = minimist(process.argv.slice(2), {
@@ -68,8 +69,7 @@ Options:
     if (argv.json) {
       console.log(JSON.stringify(results, null, 2));
     } else {
-      // Basic output for now (US-004)
-      console.dir(results, { depth: null, colors: true });
+      console.log(formatTable(results));
     }
   } catch (error) {
     console.error('Error fetching quotas:', error);
