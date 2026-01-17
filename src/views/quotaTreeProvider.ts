@@ -4,6 +4,7 @@ import { ProviderQuotaResult, AccountQuota, ModelQuota, HealthStatus } from '../
 import { getHealthEmoji } from '../utils/health-core';
 import { getHealthThemeIcon, getProviderIcon } from '../utils/health-vscode';
 import { formatTimeUntil } from '../utils/time';
+import { formatQuota } from '../utils/format';
 
 type TreeItemData = ProviderQuotaResult | AccountQuota | ModelQuota;
 
@@ -117,7 +118,7 @@ export class QuotaTreeItem extends vscode.TreeItem {
     const filledCount = Math.round((model.remainingPercent / 100) * barWidth);
     const bar = '█'.repeat(filledCount) + '░'.repeat(barWidth - filledCount);
 
-    let description = `${bar} ${model.remainingPercent}%`;
+    let description = `${bar} ${formatQuota(model)}`;
     if (model.resetTime) {
       description += ` ⏱️ ${formatTimeUntil(model.resetTime)}`;
     }
@@ -136,6 +137,13 @@ export class QuotaTreeItem extends vscode.TreeItem {
       `Remaining: ${model.remainingPercent}%`,
       `Used: ${model.usedPercent}%`,
     ];
+    if (model.unitName && model.remainingUnits !== undefined && model.totalUnits !== undefined) {
+      if (model.unitName === 'USD') {
+        tooltipLines.push(`Units: $${model.remainingUnits.toFixed(2)} / $${model.totalUnits.toFixed(2)}`);
+      } else {
+        tooltipLines.push(`Units: ${model.remainingUnits} / ${model.totalUnits} ${model.unitName}`);
+      }
+    }
     if (model.resetTime) {
       tooltipLines.push(`Resets: ${model.resetTime.toLocaleString()}`);
     }

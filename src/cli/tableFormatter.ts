@@ -1,5 +1,6 @@
 import Table from 'cli-table3';
 import { ProviderQuotaResult } from '../types';
+import { formatQuota } from '../utils/format';
 
 export function formatTable(results: ProviderQuotaResult[]): string {
   const table = new Table({
@@ -49,7 +50,7 @@ export function formatTable(results: ProviderQuotaResult[]): string {
         table.push([
           provider.displayName,
           model.displayName || model.name,
-          `${model.remainingPercent.toFixed(0)}%`,
+          formatQuota(model),
           model.resetTime ? new Date(model.resetTime).toLocaleString() : '-',
           getHealthEmoji(model.remainingPercent)
         ]);
