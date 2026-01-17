@@ -31,6 +31,9 @@
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
+  "bin": {
+    "uaq": "./out/cli.js"
+  },
   "contributes": {
     "viewsContainers": {
       "activitybar": [
@@ -148,10 +151,15 @@
     "package": "vsce package"
   },
   "devDependencies": {
+    "@types/minimist": "^1.2.5",
     "@types/node": "^20.10.0",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^2.22.0",
     "typescript": "^5.3.0",
     "vitest": "^4.0.17"
+  },
+  "dependencies": {
+    "cli-table3": "^0.6.5",
+    "minimist": "^1.2.8"
   }
 }
