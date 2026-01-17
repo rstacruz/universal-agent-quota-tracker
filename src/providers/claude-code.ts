@@ -180,6 +180,9 @@ export class ClaudeCodeProvider extends BaseQuotaProvider {
         remainingPercent,
         usedPercent: 100 - remainingPercent,
         resetTime: activeBlock?.endTime,
+        totalUnits: DEFAULT_5_HOUR_LIMIT_USD,
+        remainingUnits: Math.max(0, DEFAULT_5_HOUR_LIMIT_USD - costUSD),
+        unitName: 'USD',
       }];
 
       const account: AccountQuota = {
