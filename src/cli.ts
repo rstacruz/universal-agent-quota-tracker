@@ -2,6 +2,10 @@
 import minimist from 'minimist';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { CLIConfigService } from './services/cliConfigService';
+import { ApiKeyService } from './services/apiKeyService';
+import { ProviderRegistry } from './providers';
+import { setZaiApiKey } from './providers/zai';
 
 async function main() {
   const argv = minimist(process.argv.slice(2), {
@@ -15,10 +19,7 @@ async function main() {
   if (argv.version) {
     // Read package.json at runtime to avoid build structure issues
     try {
-      const packageJsonPath = join(__dirname, '..', 'package.json'); // Assumes out/cli.js -> ../package.json logic if run from out, but in src it is different.
-      // Actually, when running from ./out/cli.js, the package.json is in ../package.json relative to the file.
-      // But let's verify where out is. Root/out. Root/package.json. So yes, ../package.json.
-      
+      const packageJsonPath = join(__dirname, '..', 'package.json');
       const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
       console.log(`v${pkg.version}`);
     } catch (e) {
@@ -39,8 +40,41 @@ Options:
     process.exit(0);
   }
 
-  console.log('Universal Agent Quota Tracker CLI');
-  // Future implementation: Fetch providers
+  if (!argv.json) {
+    console.log('Universal Agent Quota Tracker CLI');
+  }
+
+  try {
+    // Initialize services
+    const configService = new CLIConfigService();
+    const apiKeyService = new ApiKeyService(configService);
+    
+    // Load API keys
+    const zaiKey = await apiKeyService.getApiKey('zai');
+    if (zaiKey) {
+      setZaiApiKey(zaiKey);
+    }
+    
+    // Initialize Registry
+    const registry = new ProviderRegistry();
+    
+    if (!argv.json) {
+      console.log('Fetching quotas...');
+    }
+    
+    // Fetch all
+    const results = await registry.fetchAll();
+    
+    if (argv.json) {
+      console.log(JSON.stringify(results, null, 2));
+    } else {
+      // Basic output for now (US-004)
+      console.dir(results, { depth: null, colors: true });
+    }
+  } catch (error) {
+    console.error('Error fetching quotas:', error);
+    process.exit(1);
+  }
 }
 
 main().catch((err) => {
