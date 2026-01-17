@@ -148,7 +148,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "package": "vsce package"
+    "package": "vsce package",
+    "cli": "npm run compile && node ./out/cli.js"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.5",

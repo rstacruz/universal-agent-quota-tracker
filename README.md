@@ -12,6 +12,47 @@ Monitor quota for AI CLI tools in VS Code with a sidebar panel and status bar.
 | **Gemini CLI** | OAuth 2.0 | `~/.gemini/oauth_creds.json` |
 | **Z.AI** | API Key | `$ZAI_API_KEY` environment variable |
 
+## CLI Usage
+
+This tool includes a standalone CLI to check quotas from your terminal without opening VS Code.
+
+### Installation
+
+```bash
+# Link locally
+npm link
+
+# Or run directly from source
+npm run cli
+```
+
+### Commands
+
+```bash
+# Show quotas in a table
+uaq
+
+# Output JSON (for scripts)
+uaq --json
+
+# Show help
+uaq --help
+```
+
+### Configuration (CLI)
+
+The CLI looks for API keys in two places (in order of priority):
+
+1. **Environment Variables**:
+   - `ZAI_API_KEY`: API key for Z.AI
+
+2. **Config File**: `~/.config/universal-agent-quota/config.json`
+   ```json
+   {
+     "universalQuota.zai.apiKey": "your-key-here"
+   }
+   ```
+
 ## Features
 
 - **Sidebar Panel**: Hierarchical view of all providers, accounts, and models
