@@ -1,5 +1,5 @@
 import { ProviderQuotaResult, ModelQuota, HealthStatus } from '../types';
-import { calculateOverallHealth } from '../utils/health';
+import { calculateOverallHealth } from '../utils/health-core';
 import { formatTimeUntil } from '../utils/time';
 
 export abstract class BaseQuotaProvider {

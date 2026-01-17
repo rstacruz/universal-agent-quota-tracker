@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { homedir } from 'node:os';
 import { BaseQuotaProvider } from './base';
 import { ProviderQuotaResult, AccountQuota, ModelQuota } from '../types';
-import { calculateOverallHealth } from '../utils/health';
+import { calculateOverallHealth } from '../utils/health-core';
 
 const GOOGLE_TOKEN_ENDPOINT = 'https://oauth2.googleapis.com/token';
 const GEMINI_CODE_ASSIST_ENDPOINT = 'https://cloudcode-pa.googleapis.com/v1internal:loadCodeAssist';

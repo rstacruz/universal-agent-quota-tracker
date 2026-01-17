@@ -5,7 +5,7 @@ import { CodexProvider } from './codex';
 import { GeminiCliProvider } from './gemini-cli';
 import { ZaiProvider } from './zai';
 import { ProviderQuotaResult, HealthStatus } from '../types';
-import { calculateHealth, getHealthEmoji } from '../utils/health';
+import { calculateHealth, getHealthEmoji } from '../utils/health-core';
 
 export class ProviderRegistry {
   private providers: BaseQuotaProvider[];

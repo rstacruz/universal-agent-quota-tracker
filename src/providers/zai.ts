@@ -1,6 +1,6 @@
 import { BaseQuotaProvider } from './base';
 import { ProviderQuotaResult, AccountQuota, ModelQuota } from '../types';
-import { calculateOverallHealth } from '../utils/health';
+import { calculateOverallHealth } from '../utils/health-core';
 
 const ZAI_QUOTA_ENDPOINT = 'https://api.z.ai/api/monitor/usage/quota/limit';
 

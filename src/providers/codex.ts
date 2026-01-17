@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { homedir } from 'node:os';
 import { BaseQuotaProvider } from './base';
 import { ProviderQuotaResult, AccountQuota, ModelQuota } from '../types';
-import { calculateOverallHealth } from '../utils/health';
+import { calculateOverallHealth } from '../utils/health-core';
 
 const CODEX_API_ENDPOINT = 'https://chatgpt.com/backend-api/wham/usage';
 

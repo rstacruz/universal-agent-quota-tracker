@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import { ProviderRegistry } from '../providers';
 import { ProviderQuotaResult, AccountQuota, ModelQuota, HealthStatus } from '../types';
-import { getHealthThemeIcon, getHealthEmoji, getProviderIcon } from '../utils/health';
+import { getHealthEmoji } from '../utils/health-core';
+import { getHealthThemeIcon, getProviderIcon } from '../utils/health-vscode';
 import { formatTimeUntil } from '../utils/time';
 
 type TreeItemData = ProviderQuotaResult | AccountQuota | ModelQuota;

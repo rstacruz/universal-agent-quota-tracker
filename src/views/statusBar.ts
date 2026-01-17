@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { ProviderRegistry } from '../providers';
-import { getHealthColor } from '../utils/health';
+import { getHealthColor } from '../utils/health-vscode';
 
 export class QuotaStatusBar implements vscode.Disposable {
   private statusBarItem: vscode.StatusBarItem;

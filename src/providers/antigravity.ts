@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { homedir, platform } from 'node:os';
 import { BaseQuotaProvider } from './base';
 import { ProviderQuotaResult, AccountQuota, ModelQuota } from '../types';
-import { calculateOverallHealth } from '../utils/health';
+import { calculateOverallHealth } from '../utils/health-core';
 
 const execAsync = promisify(exec);
 
